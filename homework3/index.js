@@ -1,28 +1,22 @@
 //---------------task 1----------------
 function durationBetweenDates(firstDate, secondDate, dimension) {
-    const date1 = new Date(firstDate);
-    const date2 = new Date(secondDate);
-    const diffTime = Math.abs(date1 - date2);
-    if (dimension === 'seconds') {
-        const diffSeconds = Math.ceil(diffTime / (1000));
-        return console.log(diffSeconds);
+    const firstInputDate = new Date(firstDate);
+    const secondInputDate = new Date(secondDate);
+    const diffTime = Math.abs(firstInputDate - secondInputDate);
+
+    dimensionObject = new Map([
+        ['seconds', 1000],
+        ['minutes', 60000],
+        ['hours', 3600000],
+        ['days', 86400000]
+    ]);
+    if (dimensionObject.has(dimension)){
+        return console.log('Time difference is ' + Math.ceil(diffTime/dimensionObject.get(dimension)) +' '+ dimension);
     }
-    if (dimension === 'minutes') { 
-        const diffMinutes = Math.ceil(diffTime / (1000 * 60 * 60));
-        return console.log(diffMinutes);
-    }
-    if (dimension === 'hours') {
-        const diffHours = Math.ceil(diffTime / (1000 * 60));
-        return console.log(diffHours);
-    }
-    if (dimension === 'days') {
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 *24));
-        return console.log(diffDays);
-    }
-    //console.log(duration);
+    return console.log('Wrong dimension');
 }
 
-durationBetweenDates('2004-12-01', '2000-07-09', 'hours');
+durationBetweenDates('2004-12-01', '2000-07-09', 'minutes');
 
 //---------------task 2----------------
 
@@ -45,9 +39,10 @@ console.log(updatedPriceData);   // {apples: '23.40', bananas: '48.00', oranges:
 function recursiveOddSumTo(number) {
     if (number === 1){
         return 1;
-    }else if((number%2 == 1)){
-        return number + recursiveOddSumTo(number - 2);
-    } return recursiveOddSumTo(number-1);
+    } if((number%2 == 0)){
+        return recursiveOddSumTo(number-1);
+    } 
+    return number + recursiveOddSumTo(number - 2);
 };
 console.log(recursiveOddSumTo(1)) // 1
 console.log(recursiveOddSumTo(10)) // 25
