@@ -1,5 +1,5 @@
 //---------------task 1----------------
-function durationBetweenDates(firstDate, secondDate, dimension) {
+function durationBetweenDates(firstDate = '1999-12-01', secondDate = '2015-05-26', dimension = 'days') {
     const firstInputDate = new Date(firstDate);
     const secondInputDate = new Date(secondDate);
     const diffTime = Math.abs(firstInputDate - secondInputDate);
@@ -11,13 +11,13 @@ function durationBetweenDates(firstDate, secondDate, dimension) {
         ['days', 86400000]
     ]);
     if (dimensionObject.has(dimension)){
-        return console.log('Time difference is ' + Math.ceil(diffTime/dimensionObject.get(dimension)) +' '+ dimension);
+        return Math.ceil(diffTime/dimensionObject.get(dimension));
     }
-    return console.log('Wrong dimension');
+    return diffTime;
 }
 
-durationBetweenDates('2004-12-01', '2000-07-09', 'minutes');
-
+console.log(durationBetweenDates('2004-12-01', '2000-07-09', 'hoursss'));
+//console.log(durationBetweenDates());
 //---------------task 2----------------
 
 const priceData = {
@@ -39,7 +39,8 @@ console.log(updatedPriceData);   // {apples: '23.40', bananas: '48.00', oranges:
 function recursiveOddSumTo(number) {
     if (number === 1){
         return 1;
-    } if((number%2 == 0)){
+    } 
+    if((number % 2 == 0)){
         return recursiveOddSumTo(number-1);
     } 
     return number + recursiveOddSumTo(number - 2);
