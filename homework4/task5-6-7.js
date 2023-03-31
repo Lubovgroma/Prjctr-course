@@ -31,20 +31,21 @@ setTimeout(securedCountryAndHub, 2000); // виведе коректний ре�
 
 //--------------task 7-------------------
 
-function someFunction (a, b){
-    return console.log(a * b);
+function someFunction (...arg){
+    let total = arg.reduce((acc,cur) => acc*cur);
+    return console.log(total);
 }// тут напишіть довільну функцію яка робить якусь роботу зі своїми аргументами та виводить результат в консоль
 
 function slower(func, seconds) {
-    return (a, b) => { setTimeout(() => {
-        func(a, b);
+    return (...arg) => { setTimeout(() => {
+        func(...arg);
     }, seconds*1000);
     }
 }
 
 let slowedSomeFunction = slower(someFunction, 5); // обгортаєте свою довільну функцію 'someFunction' в декоратор*
 
-slowedSomeFunction(3, 5); // викликаєте декоратор*
-console.log('Chill out, you will get you result in 5 seconds')
+slowedSomeFunction(3, 5, 4); // викликаєте декоратор*
+// console.log('Chill out, you will get you result in 5 seconds')
 // виведе в консоль "Chill out, you will get you result in 5 seconds"
 //...через 5 секунд виведе результат роботи 'someFunction*'
