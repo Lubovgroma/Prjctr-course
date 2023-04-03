@@ -30,28 +30,25 @@ runningTimeInMinutes: 107,
 
 function byProperty(property, direction) {
     const negativeValue = -1;
-    const equalValue = 0;
-        if(direction === '>')
-        {
-            return (x,y) => {
-                if ( y[property] > x[property]){
-                    return negativeValue;
-                }
-                return equalValue;
+    const positiveValue = 1;
+    return (x,y) => {
+        const checkProperty = () => {
+            if (x[property] < y[property]){
+                return negativeValue;
+            } 
+            else {
+                return positiveValue; 
             }
         }
-        if(direction === '<')
-        {
-            return (x,y) => {
-                if (y[property] < x[property]){
-                    return negativeValue;
-                }
-                return equalValue;
-            }
+        if (direction === '>'){        
+            return checkProperty();// ascending
+        }else {
+            return checkProperty()*(-1);//descending
         }
-        
+
+    }
 }
 
-console.log(movies.sort(byProperty('releaseYear', '>'))); // виведе масив фільмів посортованих по року випуску, від старішого до новішого*
-console.log(movies.sort(byProperty('runningTimeInMinutes', '<'))); // виведе масив фільмів посортованих по їх тривалості, від найдовшого до найкоротшого*
-console.log(movies.sort(byProperty('movieName', '>'))); // виведе масив фільмів посортованих по назві, в алфавітному порядку*
+//console.log(movies.sort(byProperty('releaseYear', '>'))); // виведе масив фільмів посортованих по року випуску, від старішого до новішого*
+//console.log(movies.sort(byProperty('runningTimeInMinutes', '<'))); // виведе масив фільмів посортованих по їх тривалості, від найдовшого до найкоротшого*
+//console.log(movies.sort(byProperty('movieName', '>'))); // виведе масив фільмів посортованих по назві, в алфавітному порядку*

@@ -3,7 +3,7 @@
 //---------------task 1------------------
 
 function addThemAll (...allArg ){
-    return allArg.reduce((a, b)=>a+b);
+    return allArg.reduce((a, b)=>a+b,0);
 }
 
 console.log(addThemAll(2,4)); /// 6*
