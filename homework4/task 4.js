@@ -5,9 +5,8 @@ function detonatorTimer1(delay){
     let timer = delay;
     const timerId = setInterval(() => {
         if (timer === 0) {
-            clearInterval(timerId); 
-            return 
             console.log('BOOM!');
+            return clearInterval(timerId);
         }
         console.log(timer);
         timer--;
@@ -18,9 +17,9 @@ function detonatorTimer1(delay){
 function detonatorTimer2(delay){
     let timer = delay;
     const timerId = setTimeout(() => {
-        if (timer === 0) {
-            return 
+        if (timer === 0) { 
             console.log("BOOM!");
+            return 1;
         }
         console.log(timer);
         return detonatorTimer2(timer-1);   
