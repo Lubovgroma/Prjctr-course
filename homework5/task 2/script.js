@@ -3,40 +3,40 @@ const btnClick = document.querySelector('.button');
 const bodyValue = document.querySelector('body');
 const dateDiv = document.querySelector('div');
 
+const buttonStatusKey = 'lastStatus';
+const lastDateKey = 'lastDate';
 //declaration of saveStatus() / saving status of button and date when button was clicked
 const saveStatusAndTime = (latestStatus, latestDate) => {
-    localStorage.setItem('Button', latestStatus);
-    localStorage.setItem('Date', latestDate);
+    localStorage.setItem(buttonStatusKey, latestStatus);
+    localStorage.setItem(lastDateKey, latestDate);
 }
 
 //getting saved status and date
-let savedStatus = localStorage.getItem('Button');
-let savedDate = localStorage.getItem('Date');
+let savedStatus = localStorage.getItem(buttonStatusKey);
+let savedDate = localStorage.getItem(lastDateKey);
 
-const buttonOn = (timeOfClick) => 
-{
-    bodyValue.style.backgroundColor = "rgb(234, 210, 200)";
-    btnClick.innerHTML = "Turn Off"
-    dateDiv.innerHTML = "Last Turn On: " + timeOfClick;
-    savedStatus = "On";
-    saveStatusAndTime(savedStatus, timeOfClick);
-}
-
-
-const buttonOff = (timeOfClick) => 
-{
-    bodyValue.style.backgroundColor = "black";
-    btnClick.innerHTML = "Turn On";
-    dateDiv.innerHTML = "Last Turn Off: " + timeOfClick;
-    savedStatus = "Off";
-    saveStatusAndTime(savedStatus, timeOfClick);
-}
-
-if(savedStatus != null){
-    if(savedStatus === "On"){
-        buttonOn(savedDate);
+const switchButton = (timeOfClick, buttonAction) => 
+{   
+    if (buttonAction === "on") {
+        bodyValue.style.backgroundColor = "rgb(234, 210, 200)";
+        btnClick.innerHTML = "Turn Off";
     }
-    else buttonOff(savedDate);
+    else if (buttonAction === "off"){
+        bodyValue.style.backgroundColor = "black";
+        btnClick.innerHTML = "Turn On";
+    }
+    dateDiv.innerHTML = `Last Turn ${buttonAction}: ${timeOfClick}`;
+    savedStatus = buttonAction;
+    saveStatusAndTime(savedStatus, timeOfClick);
+}
+
+if(savedStatus !== null){
+    if(savedStatus === "on"){
+        switchButton(savedDate, "on");
+    }
+    else {
+        switchButton(savedDate, "off");
+    }
 }
 
 const listener = (event) => {
@@ -47,12 +47,14 @@ const listener = (event) => {
     let hour = currentDate.getHours();
     let min = currentDate.getMinutes();
     let sec = currentDate.getSeconds();
-    let timeOfClick = day + "-" + month + "-" + year + "  " + hour + ":" + min + ":" + sec;
+    let timeOfClick = `${day}-${month}-${year}  ${hour}:${min}:${sec}`;
 
-    if(savedStatus === "Off"){
-    buttonOn(timeOfClick);
+    if(savedStatus === "off"){
+        switchButton(timeOfClick, "on");
     }
-    else buttonOff(timeOfClick);  
+    else {
+        switchButton(timeOfClick, "off");
+    }  
 }
 
 btnClick.addEventListener('click', listener);
