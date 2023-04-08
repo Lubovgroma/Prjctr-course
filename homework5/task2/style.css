@@ -1,0 +1,24 @@
+body {
+    background-color: rgb(234, 210, 200);
+    font-family: Verdana, Tahoma, sans-serif;
+}
+
+div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    color: aliceblue;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 75px;
+    font-size: 30px;
+    margin: auto;
+    margin-top: 15rem;
+    width: 20%;
+    padding: 1rem 0 1rem 0;
+}
