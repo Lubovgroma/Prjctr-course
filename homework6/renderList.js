@@ -9,13 +9,13 @@ export const renderList = (list) => {
         newTask.innerHTML = `
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <input class="checkbox" type="checkbox">
+                                    <input type="checkbox" id="c1" value="test" class="checkbox" data-cheker ="${index}">
                                     ${element.name}
                                     <i class="input-helper"></i>
                                 </label>
                             </div>
                             <a class="remove mdi mdi-close-circle-outline" data-index ="${index}"></a>
-                            <i class="fa fa-edit center" data-edit ="${index}"></i>`
+                            <i class="fa fa-edit center" data-indicator ="${index}"></i>`
         listOfTasks.append(newTask);
     });
     

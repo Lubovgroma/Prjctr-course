@@ -9,6 +9,7 @@ import { listClickListener } from './listClickListener.js';
 import { formChgListener } from './formChgListener.js';
 import {byName} from './filter.js';
 import {editClickListener} from './editClickListener.js';
+import {checkCompletedTask} from './checkCompletedTask.js';
 /*
   Google: todo list html css template
   https://freefrontend.com/bootstrap-to-do-lists/
@@ -51,6 +52,15 @@ const startApp = () => {
       saveList(tasksList);
       renderList(tasksList);
     });
+    checkCompletedTask();
+    // checkCompletedTask((listElement, checkedStatus) => {
+    //   tasksList.push({
+    //     name: listElement,
+    //     completed: checkedStatus
+    //   });
+    //   saveList(tasksList);
+    //   renderList(tasksList);
+    // });
 
 };
 
