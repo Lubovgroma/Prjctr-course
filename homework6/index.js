@@ -26,7 +26,7 @@ const startApp = () => {
     formListener((newListItem) => {
         tasksList.push({
           name: newListItem,
-          completed: false
+          checked: false
         });
         saveList(tasksList);
         renderList(tasksList);
@@ -46,22 +46,19 @@ const startApp = () => {
     editClickListener((editedText, index) => {
       tasksList.push({
         name: editedText,
-        completed: false
+        checked: false
       });
       tasksList.splice(index, 1);
       saveList(tasksList);
       renderList(tasksList);
     });
-    checkCompletedTask();
-    // checkCompletedTask((listElement, checkedStatus) => {
-    //   tasksList.push({
-    //     name: listElement,
-    //     completed: checkedStatus
-    //   });
-    //   saveList(tasksList);
-    //   renderList(tasksList);
-    // });
 
+    checkCompletedTask((checkedStatus, index) => {
+      console.log(checkedStatus, index);
+      tasksList[index].checked = checkedStatus;
+      saveList(tasksList);
+      renderList(tasksList);
+    });
 };
 
 document.addEventListener('DOMContentLoaded', startApp);
