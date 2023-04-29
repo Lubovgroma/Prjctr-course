@@ -1,73 +1,109 @@
 //Parent of all classes
 class OlympicSport {
     #year;
-    constructor(type, sportName){
-        this.type = type;
+    constructor(team, sportName, year){
+        this.team = team;
         this.sportName = sportName;
-        this.#year = 'year';
+        this.#year = year;
     }
-    win(){
-        console.log('Partisipant won competition');
+    win(sportName){
+        console.log(`Partisipant won ${sportName} competition`);
     }
     compete(){
-        console.log(`Partisipant compete for the best final score`);
+        console.log(`Olympics competition is every ${this.#year} years`);
     }
-    lose(){
-        console.log(`Partisipant lose competition`);
+    #represent(){
+        if (this.team === 'Ukraine') {
+            return 'winner';
+        }
+        else {
+            return 0;
+        }
+    }
+    getTeam(){
+        return this.#represent();
     }
 }
+
+const u = new OlympicSport('Ukraine', 'Gym', 4);
+console.log(u.getTeam());
+
 //Child class of OlympicSport class and parent for StrokeSwimming and TeamSwimming
 class Swimming extends OlympicSport{
     #distance;
-    constructor(type, sportName, style, approach){
-        super(type, sportName);
+    constructor(team, sportName, style, approach, distance){
+        super(team, sportName);
         this.style = style;
         this.approach = approach;
-        this.#distance = 'distance';
+        this.#distance = distance;
     }
-    swim(){
-        console.log('Partisipant is swimming');
+    swim(sportName, style){
+        this.sportName = sportName;
+        this.style = style;
+        if (sportName.toLowerCase() === 'swimming') {
+            console.log(`Partisipant is swimming using ${style}`);
+        }else {
+            console.log('You r checking wrong sport');
+        }
     }
     lead(){
-        console.log('Partisipant is leading the race');
+        console.log(`Partisipant is leading the ${this.#distance} race`);
     }
-    coach(){
-        console.log(`Coaching is in progress`);
+    coach(approach){
+        this.approach = approach;
+        if (approach) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }
+const p = new Swimming();
+p.swim('Swimming', 'batterfly');
+console.log(p);
 //child class of Swimming class
 class StrokeSwimming extends Swimming {
     #position;
-    constructor(style, approach, distance, stroke, record){
-        super(type, sportName, style, approach, distance);
+    constructor(team, sportName, style, approach, distance, stroke, record, position){
+        super(team, sportName, style, approach, distance);
         this.stroke = stroke;
-        this.#position = 'Face front';
+        this.#position = position;
         this.record = record;
     }
-    swimIndividualy(style){
-        this.style = style;
-        console.log(`Partisipant is swimming in ${this.style} style`);
+    swimIndividualy(position){
+        this.#position = position
+        console.log(`Partisipant is ${this.#position}`);
     }
-    chooseStroke(stroke){
-        if(['butterfly', 'freestyle', 'backstroke', 'breaststroke', 'Sidestroke'].includes(size)){
-            this.stroke = stroke;
-        }
-        else {
+    #getStroke(stroke){
+       if(['butterfly', 'freestyle', 'backstroke', 'breaststroke', 'Sidestroke'].includes(stroke)){
+            console.log('Good choice!');
+            return;
+        }else {
             throw new Error ('Please select correct stroke');
         }
     }
+    chooseStroke(stroke){
+        this.stroke = stroke
+        return this.#getStroke(stroke);
+    }
     fixRecord(record){
         this.record = record;
+        if (record < 10) {
+            console.log('Fix your record');
+        }
     }
 }
+const k = new StrokeSwimming();
+k.chooseStroke('freestyle');
+console.log(k);
 //child class of Swimming class
 class TeamSwimming extends Swimming {
     #direction;
-    constructor(style, approach, distance, gameName, numberOfPartisipants){
-        super(type, sportName, style, approach, distance);
+    constructor(team, sportName, style, approach, distance, gameName, numberOfPartisipants, direction){
+        super(team, sportName, style, approach, distance);
         this.gameName = gameName;
         this.numberOfPartisipants = numberOfPartisipants;
-        this.#direction = 'forward';
+        this.#direction = direction;
     }
     swimWithTeam(gameName){
         this.gameName = gameName;
@@ -75,18 +111,21 @@ class TeamSwimming extends Swimming {
     }
     game(gameName, numberOfPartisipants){
         this.gameName = gameName;
-        this.numberOfPartisipants === numberOfPartisipants;
+        this.numberOfPartisipants = numberOfPartisipants;
         console.log(`Start a ${this.gameName} with ${numberOfPartisipants} partisipants!`);
     }
-    fail(){
-        console.log(`team failed`);
+    fail(direction){
+        this.#direction = direction;
+        console.log(`Failed to follow correct ${direction} direction`);
     }
 }
+const t = new TeamSwimming();
+t.fail('forward');
 //child class of OlympicSport class
 class Athletics extends OlympicSport {
     #origin;
-    constructor(type, sportName, trackOrField, usedEquipment){
-        super(type, sportName);
+    constructor(team, sportName, trackOrField, usedEquipment){
+        super(team, sportName);
         this.trackOrField = trackOrField;
         this.#origin = 'white line';
         this.usedEquipment = usedEquipment;
@@ -106,24 +145,30 @@ class Athletics extends OlympicSport {
 //child class of OlympicSport class
 class RacketSports extends OlympicSport {
     #info;
-    constructor(type, sportName, racketType, ballType, score){
-        super(type, sportName);
+    constructor(team, sportName, racketType, ballType, score, info){
+        super(team, sportName);
         this.racketType = racketType;
         this.ballType = ballType;
         this.score = score;
-        this.#info = 'Private';
+        this.#info = info;
     }
     hit(ballType, racketType){
         this.ballType = ballType;
         this.racketType = racketType;
         console.log(`Partisipant hit ${this.ballType} with ${this.racketType}`);
     }
-    chooseSport(sportName){
-        this.sportName = sportName;
+    #checkInfo(info){
+        this.info = info;
+        if(!this.info){
+            console.log('No info provided')
+        }else {
+            console.log(this.info);
+        };
     }
-    checkYourScore(score){
+    checkYourScore(score, info){
         this.score = score;
         console.log(`Your score is ${this.score}`);
+        return this.#checkInfo(info);
     }
 }
 
