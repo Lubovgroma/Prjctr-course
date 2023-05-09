@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">   
+    <title>Date Calculator</title>
+</head>
+<body>
+    <!-- <form id = "form"> -->
+    <div class="container">
+        <div class="input-div">
+            <div class="input">
+                <input type="date" id="first-date" class="input-field"
+                placeholder="Select first date"></div>
+            <div class="input">
+                <input type="date" id="second-date" class="input-field"
+                placeholder="Select second date" disabled>
+            </div>
+            <div class="btns">
+                <button type="button" class="btn-1" value="7">Week</button>
+                <button type="button" class="btn-2" value="31">Month</button>
+            </div>
+        </div>
+          
+        <div class="radio-div">
+            <!-- <div>Select date type</div> -->
+            <div>
+                <input type="radio" name="day-type" value="all-days" id="all-days">
+                <label class="radio-label" for="day">all days</label>
+            </div>
+            <div>
+                <input type="radio" name="day-type" value="weekdays" id="weekdays">
+                <label class="radio-label" for="weekdays">weekdays</label>
+            </div>
+            <div>
+                <input type="radio" name="day-type" value="weekends" id="weekends">
+                <label class="radio-label" for="weekends">weekends</label>
+            </div>
+        </div>
+        
+        <div class="radio-div">
+            <!-- <p>Select unit</p>     -->
+            <div>
+                <input type="radio" name="calcTime" value="days" id="days">
+                <label class="radio-label" for="days">days</label>
+            </div>
+            <div>
+                <input type="radio" name="calcTime" value="hours" id="hours">
+                <label class="radio-label" for="hours">hours</label>
+            </div>
+            <div>
+                <input type="radio" name="calcTime" value="minutes" id="minutes">
+                <label class="radio-label" for="minutes">minutes</label>
+            </div>
+            <div>
+                <input  type="radio" name="calcTime" value="seconds" id="seconds">
+                <label class="radio-label" for="seconds">seconds</label>
+            </div>
+        </div>
+        <div class="calculator"><button id="calculator">Calculate</button></div> 
+        <div class="result"></div>
+        <div class="div-container history">
+            <div class="historyTitle">History of results</div>
+            <div class="listOfResults">
+        </div>
+    </div>
+    </div>
+    <script type="module" src="index.js"></script>
+</body>
+</html>
