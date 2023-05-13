@@ -1,5 +1,6 @@
-export function calculateWeekendDays(start, end, timeDimension) {
+export function calculateWeekendDays(start, end, timeDimension, selectedDayType, total) {
     let weekendDays = 0;
+    let weekdays = Math.ceil(total / timeDimension);
     while (start <= end) {
       const currentDayOfWeek = start.getDay();
       if (currentDayOfWeek === 0 || currentDayOfWeek === 6) {
@@ -7,19 +8,13 @@ export function calculateWeekendDays(start, end, timeDimension) {
       }
       start = new Date(+start + timeDimension);
     }
-    return weekendDays;
-}
-  
-export function calculateWeekdays(start, end, timeDimension, total) {
-    let weekdays = Math.ceil(total / timeDimension);
-    while (start <= end) {
-      const currentDayOfWeek = start.getDay();
-      if (currentDayOfWeek === 0 || currentDayOfWeek === 6) {
-        weekdays--;
-      }
-      start = new Date(+start + timeDimension);
+    if (selectedDayType === 'weekends') {
+      return weekendDays;
+    } else if (selectedDayType === 'weekdays') {
+      return weekdays-weekendDays;
     }
-    return weekdays;
+    
 }
+
 
   

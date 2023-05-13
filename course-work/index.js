@@ -2,7 +2,7 @@ import { addResult } from "./addResult.js";
 import { addAdvanceDate } from "./addAdvanceDate.js";
 import { checkUserSelection } from "./checkUserSelection.js";
 import { saveResult, loadResult } from "./saveResult.js";
-import {calculateWeekendDays, calculateWeekdays} from "./calculateWeekendDays.js"
+import {calculateWeekendDays} from "./calculateWeekendDays.js"
 
 const dateCalculator = () => {
     loadResult();
@@ -34,7 +34,7 @@ const dateCalculator = () => {
         const secondDateEntered = new Date(secondDate);
         const timeDifferenceInMilliseconds = secondDateEntered - firstDateEntered;
         if (selectedDayType === 'weekends') {
-            const weekendDays = calculateWeekendDays(firstDateEntered, secondDateEntered, dimensionObject.get(selectedTime));
+            const weekendDays = calculateWeekendDays(firstDateEntered, secondDateEntered, dimensionObject.get(selectedTime), selectedDayType);
             addResult(weekendDays, selectedTime);
             saveResult(firstDateEntered, secondDateEntered, selectedDayType, selectedTime, weekendDays);
         } else if (selectedDayType === 'all-days') {
@@ -44,7 +44,7 @@ const dateCalculator = () => {
             saveResult(firstDateEntered, secondDateEntered, selectedDayType, selectedTime, timeframe);
         } else if (selectedDayType === 'weekdays') {
             const timeDimension = dimensionObject.get(selectedTime);
-            const weekdays = calculateWeekdays(firstDateEntered, secondDateEntered, timeDimension, timeDifferenceInMilliseconds);
+            const weekdays = calculateWeekendDays(firstDateEntered, secondDateEntered, timeDimension, selectedDayType, timeDifferenceInMilliseconds);
             addResult(weekdays, selectedTime);
             saveResult(firstDateEntered, secondDateEntered, selectedDayType, selectedTime, weekdays);
         }
