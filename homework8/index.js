@@ -5,17 +5,15 @@ const OlympicSport = function (team, sportName, year) {
     this.year = year;
 }
 
-OlympicSport.prototype.win = function () {
+OlympicSport.prototype.checkIfwon = function () {
     return `Partisipant won ${this.sportName} competition`;
 }
-OlympicSport.prototype.compete = function () {
+OlympicSport.prototype.getYear = function () {
     return `Olympics competition is every ${this.year} years`;
 }
 OlympicSport.prototype.getTeamRepresentation = function () {
     return `${this.team} team with represent their country`
 }
-const u = new OlympicSport('Ukraine', 'Gym', 4);
-console.log(u.getTeamRepresentation());
 
 //Child prototype of OlympicSport class and parent for StrokeSwimming and TeamSwimming
 const Swimming = function(team, sportName, year, style, approach, distance){
@@ -26,23 +24,20 @@ const Swimming = function(team, sportName, year, style, approach, distance){
 }
 Swimming.prototype = Object.create(OlympicSport.prototype);
 
-Swimming.prototype.swimUsingStyle = function(){
+Swimming.prototype.checkStyle = function(){
     if (this.sportName.toLowerCase() === 'swimming') {
         `Partisipant is swimming using ${this.style}`;
     }else {
         return 'You r checking wrong sport';
     }
 }
-Swimming.prototype.lead = function(){
-    return `Partisipant is leading the ${this.distance} race`;
+Swimming.prototype.getApproach = function(){
+    return this.approach;
 }
-Swimming.prototype.start = function(){
+Swimming.prototype.checkDistance = function(){
     return `Partisipant started ${this.distance} race`;
 }
 
-const p = new Swimming();
-p.coach(true);
-console.log(p);
 //child prototype of Swimming class
 const StrokeSwimming = function(team, sportName, style, approach, distance, stroke, record, position) {
     Swimming.call(this, team, sportName, style, approach, distance);
@@ -52,11 +47,11 @@ const StrokeSwimming = function(team, sportName, style, approach, distance, stro
 }
 StrokeSwimming.prototype = Object.create(Swimming.prototype);
 
-StrokeSwimming.prototype.swimIndividualy = function(){
+StrokeSwimming.prototype.checkPosition = function(){
     return `Partisipant is ${this.position}`;
 }
-StrokeSwimming.prototype.getStroke = function(stroke){
-    if(['butterfly', 'freestyle', 'backstroke', 'breaststroke', 'Sidestroke'].includes(stroke)){
+StrokeSwimming.prototype.getStroke = function(){
+    if(['butterfly', 'freestyle', 'backstroke', 'breaststroke', 'Sidestroke'].includes(this.stroke)){
         return 'Good choice!';
         
     }else {
@@ -66,40 +61,32 @@ StrokeSwimming.prototype.getStroke = function(stroke){
 StrokeSwimming.prototype.chooseStroke = function(){
     return `Selected stroke ${this.stroke}`;
 }
-StrokeSwimming.prototype.fixRecord = function(record){
-    this.record = record;
-    if (record < 10) {
+StrokeSwimming.prototype.fixRecord = function(){
+    if (this.record < 10) {
         return 'Fix your record';
     } else {
         return 'Good job!';
     }
 }
 
-const k = new StrokeSwimming();
-console.log(k.lead());
-console.log(k);
 //child prototype of Swimming class
 const TeamSwimming = function(team, sportName, style, approach, distance, gameName, numberOfPartisipants, direction) {
     Swimming.call(this, team, sportName, style, approach, distance);
     this.gameName = gameName;
     this.numberOfPartisipants = numberOfPartisipants;
-    this.direction = direction;
+    this.capitan = capitan;
 }
 TeamSwimming.prototype = Object.create(Swimming.prototype);
 
-TeamSwimming.prototype.swimWithTeam = function(){
-    `Partisipants are competing in ${this.gameName}`;
+TeamSwimming.prototype.getGameName = function(){
+    return `Partisipants are competing in ${this.gameName}`;
 }
-TeamSwimming.prototype.game = function(){
-    `Start a ${this.gameName} with ${numberOfPartisipants} partisipants!`;
+TeamSwimming.prototype.checkGameInfo = function(){
+    return `Start a ${this.gameName} with ${this.numberOfPartisipants} partisipants!`;
 }
-TeamSwimming.prototype.fail = function(){
-    `Failed to follow correct ${direction} direction`;
+TeamSwimming.prototype.checkWhoIsCapitan = function(){
+    return `Capitan is ${this.capitan}`;
 }
-
-const t = new TeamSwimming();
-t.fail('forward');
-console.log(t);
 //child prototype of OlympicSport class
 const Athletics = function(team, sportName, year, trackOrField, usedEquipment) {
     OlympicSport.call(this, team, sportName, year);
@@ -108,13 +95,13 @@ const Athletics = function(team, sportName, year, trackOrField, usedEquipment) {
     this.usedEquipment = usedEquipment;
 }
 Athletics.prototype = Object.create(OlympicSport.prototype);
-Athletics.prototype.start = function(){
-    return `Partisipant started to ${this.sportName} from ${this.origin}.`;
+Athletics.prototype.checkOrigin = function(){
+    return `Partisipant started ${this.sportName} from ${this.origin}.`;
 }
-Athletics.prototype.finsih = function(){
-    return `Partisipants has all finished`;
+Athletics.prototype.checkTrackOfField = function(){
+    return this.trackOrField;
 }
-Athletics.prototype.selectEquipment = function(){
+Athletics.prototype.checkSelectedEquipment = function(){
     alert(`You have selected ${this.usedEquipment}`);
 }
 
@@ -127,7 +114,7 @@ const RacketSports = function(team, sportName, year, racketType, ballType, score
     this.info = info;
 }
 RacketSports.prototype = Object.create(OlympicSport.prototype);
-RacketSports.prototype.hit = function(){
+RacketSports.prototype.checkBallAndRacketType = function(){
     return `Partisipant hit ${this.ballType} with ${this.racketType}`;
 }
 RacketSports.prototype.checkInfo = function(){
@@ -141,9 +128,3 @@ RacketSports.prototype.checkYourScore = function(){
     console.log(`Your score is ${this.score}`);
     return 'info';
 }
-
-const a = new RacketSports();
-a.checkYourScore(24);
-console.log(a);
-const b = new Athletics();
-b.start('run');
