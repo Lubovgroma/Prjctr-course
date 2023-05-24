@@ -2,14 +2,6 @@ import Phaser from "../lib/phaser.js";
 
 export default class Game extends Phaser.Scene
 {   
-    topTube
-    downTube
-    player
-    cursors
-    gameStarted
-    gameInitialized
-    score
-    passedTube
     constructor(){
         super('game'),
         this.player;
@@ -44,9 +36,24 @@ export default class Game extends Phaser.Scene
             frameRate: 15,
             repeat: -1,
         })
-        this.gameInitialized = false;
+        this.topTube = this.physics.add.sprite(600,140, 'topTube',0)
+            .setImmovable(true);
+        this.topTube.body.setAllowGravity(false);
+        this.downTube = this.physics.add.sprite(600,680, 'downTube',0)
+            .setImmovable(true);
+        this.downTube.body.setAllowGravity(false);
+        
+        this.player = this.physics.add.sprite(480/2, 550/2, 'flappy-bird', 0);
+        this.player
+            .setScale(3)
+            .setBounce(0.2);
+        this.player.body.setGravity(0,650);
+        this.player.setCollideWorldBounds(true);
+
+        this.physics.add.collider(this.topTube, this.player, () => this.scene.start('gameOverScene'));
+        this.physics.add.collider(this.downTube, this.player, () => this.scene.start('gameOverScene'));
         this.tubesSummoned = false;
-        this.tubesSummoned = false;
+        this.gameTime = 0;
     }
     birdJump(){ 
         if(!this.isJumping){
@@ -66,9 +73,7 @@ export default class Game extends Phaser.Scene
             
         }
     }
-    tubeSummon(speed)
-    {   
-
+    tubeSummon(speed){   
         if(!this.tubesSummoned){
             this.tubesSummoned = true;
             let topTubePosition = Phaser.Math.RND.between(-120,140); //min and max for top tube
@@ -96,37 +101,17 @@ export default class Game extends Phaser.Scene
         }
     }
     
-    update(time){
- 
-        if(!this.gameInitialized){
-            this.topTube = this.physics.add.sprite(600,140, 'topTube',0)
-                .setImmovable(true);
-            this.topTube.body.setAllowGravity(false);
-            this.downTube = this.physics.add.sprite(600,680, 'downTube',0)
-                .setImmovable(true);
-            this.downTube.body.setAllowGravity(false);
-            
-            this.player = this.physics.add.sprite(480/2, 550/2, 'flappy-bird', 0);
-            this.player
-                .setScale(3)
-                .setBounce(0.2);
-            this.player.body.setGravity(0,650);
-            this.player.setCollideWorldBounds(true);
-
-            this.physics.add.collider(this.topTube, this.player, () => this.scene.start('gameOverScene'));
-            this.physics.add.collider(this.downTube, this.player, () => this.scene.start('gameOverScene'));
-            this.gameInitialized = true;
-        }
+    update(){
+        this.gameTime++;
+        console.log(this.gameTime)
         this.player.anims.play('flying-bird', true);
         this.birdAnimation();
-        this.tubeSummon(200);
+        this.tubeSummon(200 + this.gameTime/15);
 
         if (this.cursors.space.isDown) {
-            this.birdJump();  
-            time = 0;        
+            this.birdJump();         
         } else {
             this.isJumping = false;
-        }
-        
+        }  
     }
 }
